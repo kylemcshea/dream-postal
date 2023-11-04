@@ -22,4 +22,5 @@ DREAM_TRANSLATE.fr = {
     tried_to_deliver_while_clocked_out = 'A tenté de livrer un colis sans être connecté. Possible exploitant.',
     tried_to_deliver_no_van = 'A tenté de livrer un colis sans que le fourgon GoPostal ne soit à moins de 30 unités de proximité. Possible exploitant.',
     delivered_a_package = 'Livré un colis à un emplacement de dépôt.',
+    you_have_been_paid = 'Vous avez été payé ${{ compensation }} pour votre livraison.',
 }

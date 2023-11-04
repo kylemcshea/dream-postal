@@ -22,4 +22,5 @@ DREAM_TRANSLATE.es = {
     tried_to_deliver_while_clocked_out = 'Intentó entregar un paquete sin estar registrado. Posible explotador.',
     tried_to_deliver_no_van = 'Intentó entregar un paquete sin que la furgoneta GoPostal estuviera a menos de 30 unidades de proximidad. Posible explotador.',
     delivered_a_package = 'Entregó un paquete en una ubicación de entrega.',
+    you_have_been_paid = 'Has recibido ${{ compensation }} por tu entrega.',
 }

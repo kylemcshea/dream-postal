@@ -22,4 +22,5 @@ DREAM_TRANSLATE.en = {
     tried_to_deliver_while_clocked_out = 'Tried to deliver a package without being clocked in. Possible exploiter.',
     tried_to_deliver_no_van = 'Tried to deliver a package without the GoPostal Van within 30 units of proximity. Possible exploiter.',
     delivered_a_package = 'Delivered a package to a drop off location.',
+    you_have_been_paid = 'You have been paid ${{ compensation }} for your delivery.',
 }

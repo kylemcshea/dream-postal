@@ -14,8 +14,6 @@ local MALE_OUTFIT = Config.MALE_OUTFIT
 local FEMALE_OUTFIT = Config.FEMALE_OUTFIT
 local DROP_OFF_PED_HASH = Config.DROP_OFF_PED_HASH
 
-local t = DREAM_TRANSLATE[Config.LANGUAGE]
-
 local isPedSpawned = false
 local postalBossPed = nil
 
@@ -86,17 +84,17 @@ end
 
 function startPostalJob()
     if not isSpawnPointClear(POSTAL_VEHICLE_SPAWN_COORDS, 10.0) then
-        NotifyPlayer(t.please_clear_area, 'error', 7500)
+        NotifyPlayer(t('please_clear_area'), 'error', 7500)
         return
     end
 
     log({
         type = 'success',
-        message = t.started_postal_job,
+        message = t('started_postal_job'),
     })
 
     local playerPed = PlayerPedId()
-    NotifyPlayer(t.head_over_to_waypoint, 'info')
+    NotifyPlayer(t('head_over_to_waypoint'), 'info')
     postalJobState.isDoingJob = true
     postalJobState.positionSet.startLocation = GetEntityCoords(playerPed)
 
@@ -132,7 +130,7 @@ function startPostalJob()
             type   = "client",
             action = pickupMail,
             icon   = 'fas fa-envelope',
-            label  = t.grab_package,
+            label  = t('grab_package'),
         }},
         distance = 3.0,
         rotation = 45,
@@ -157,20 +155,20 @@ end
 
 function pickupMail()
     if (not postalJobState.isDoingJob) then
-        NotifyPlayer(t.you_are_not_on_the_job, 'error')
+        NotifyPlayer(t('you_are_not_on_the_job'), 'error')
         log({
             type = 'error',
-            message = t.player_tried_picking_up_mail_exploit,
+            message = t('player_tried_picking_up_mail_exploit'),
         })
         return
     end
 
     log({
         type = 'success',
-        message = t.picked_up_mail,
+        message = t('picked_up_mail'),
     })
 
-    NotifyPlayer(t.place_package_in_back_of_van, 'info')
+    NotifyPlayer(t('place_package_in_back_of_van'), 'info')
 
     TARGET.RemoveZone(postalJobState.postalBoxZone)
     RemoveBlip(postalJobState.pickupBlip)
@@ -184,7 +182,7 @@ function pickupMail()
             {
                 name = 'drop-off-in-trunk',
                 icon = 'fa-solid fa-envelope',
-                label = t.drop_off_package_in_trunk,
+                label = t('drop_off_package_in_trunk'),
                 drawSprite = true,
                 bones = { 'door_pside_r', 'seat_pside_r' },
                 canInteract = function(entity, _distance, coords, _name)
@@ -205,7 +203,7 @@ function pickupMail()
                 {
                     type = "client",
                     icon = 'fa-solid fa-envelope',
-                    label = t.drop_off_package_in_trunk,
+                    label = t('drop_off_package_in_trunk'),
                     canInteract = function(entity, distance, data)
                         -- Here we're checking for the bone positions, similar to your ox_target logic
                         local boneId = GetEntityBoneIndexByName(entity, 'door_pside_r')
@@ -297,7 +295,7 @@ function createRemovePackageFromVanZone()
             {
                 name = 'take-out-package-from-van',
                 icon = 'fa-solid fa-envelope',
-                label = t.take_out_package,
+                label = t('take_out_package'),
                 drawSprite = true,
                 bones = { 'door_pside_r', 'seat_pside_r' },
                 canInteract = function(entity, _distance, coords, _name)
@@ -322,7 +320,7 @@ function createRemovePackageFromVanZone()
                 {
                     type = "client",
                     icon = 'fa-solid fa-envelope',
-                    label = t.take_out_package,
+                    label = t('take_out_package'),
                     canInteract = function(entity, distance, data)
                         if (postalJobState.isCarryingBox or not postalJobState.isDoingJob) then
                             return false
@@ -374,7 +372,7 @@ function createPutPackageInVanZone()
             {
                 name = 'put-package-in-van',
                 icon = 'fa-solid fa-envelope',
-                label = t.put_package_in_van,
+                label = t('put_package_in_van'),
                 drawSprite = true,
                 bones = { 'door_pside_r', 'seat_pside_r' },
                 canInteract = function(entity, _distance, coords, _name)
@@ -399,7 +397,7 @@ function createPutPackageInVanZone()
                 {
                     type = "client",
                     icon = 'fa-solid fa-envelope',
-                    label = t.put_package_in_van,
+                    label = t('put_package_in_van'),
                     canInteract = function(entity, distance, data)
                         if (not postalJobState.isCarryingBox or not postalJobState.isDoingJob) then
                             return false
@@ -466,11 +464,11 @@ function spawnGoPostalVehicle()
 end
 
 function endPostalJob()
-    NotifyPlayer(t.you_are_done_with_shift, 'info')
+    NotifyPlayer(t('you_are_done_with_shift'), 'info')
 
     log({
         type = 'success',
-        message = t.ended_shift,
+        message = t('ended_shift'),
     })
 
     if (postalJobState.goPostalVan) then
@@ -502,7 +500,7 @@ function spawnPostalBossPed()
             {
                 name = 'start-postal-job',
                 icon = 'fa-solid fa-envelope',
-                label = t.start_postal_job,
+                label = t('start_postal_job'),
                 canInteract = function()
                     return postalJobState.isDoingJob == false
                 end,
@@ -512,7 +510,7 @@ function spawnPostalBossPed()
             {
                 name = 'end-postal-job',
                 icon = 'fa-solid fa-envelope',
-                label = t.end_postal_job,
+                label = t('end_postal_job'),
                 canInteract = function()
                     return postalJobState.isDoingJob == true
                 end,
@@ -526,7 +524,7 @@ function spawnPostalBossPed()
                 {
                     type = "client",
                     icon = 'fa-solid fa-envelope',
-                    label = t.start_postal_job,
+                    label = t('start_postal_job'),
                     canInteract = function()
                         return postalJobState.isDoingJob == false
                     end,
@@ -537,7 +535,7 @@ function spawnPostalBossPed()
                 {
                     type = "client",
                     icon = 'fa-solid fa-envelope',
-                    label = t.end_postal_job,
+                    label = t('end_postal_job'),
                     canInteract = function()
                         return postalJobState.isDoingJob == true
                     end,
@@ -603,7 +601,7 @@ function spawnDeliverToPed(hash, coords, heading)
             {
                 name = 'drop-off-package',
                 icon = 'fa-solid fa-envelope',
-                label = t.drop_off_package,
+                label = t('drop_off_package'),
                 canInteract = function()
                     return postalJobState.isDoingJob
                 end,
@@ -617,7 +615,7 @@ function spawnDeliverToPed(hash, coords, heading)
                 {
                     type = "client",
                     icon = 'fa-solid fa-envelope',
-                    label = t.drop_off_package,
+                    label = t('drop_off_package'),
                     canInteract = function()
                         return postalJobState.isDoingJob
                     end,
@@ -639,7 +637,7 @@ function deliverPackageToPed()
     if (not postalJobState.isDoingJob) then
         log({
             type = 'error',
-            message = t.tried_to_deliver_while_clocked_out,
+            message = t('tried_to_deliver_while_clocked_out'),
         })
 
         return
@@ -651,24 +649,24 @@ function deliverPackageToPed()
     if #(dropOffCoords - vehicleCoords) > 30.00 then
         log({
             type = 'error',
-            message = t.tried_to_deliver_no_van,
+            message = t('tried_to_deliver_no_van'),
         })
 
         return
     end
 
     if (not postalJobState.isCarryingBox) then
-        NotifyPlayer(t.where_is_the_package, 'error', 7500)
+        NotifyPlayer(t('where_is_the_package'), 'error', 7500)
         return
     end
 
     log({
         type = 'success',
-        message = t.delivered_a_package,
+        message = t('delivered_a_package'),
     })
 
     local playerPed = PlayerPedId()
-    NotifyPlayer(t.you_delivered_the_package, 'success')
+    NotifyPlayer(t('you_delivered_the_package'), 'success')
 
     RemoveBlip(postalJobState.dropoffBlip)
     postalJobState.dropoffBlip = nil
@@ -731,7 +729,7 @@ function deliverPackageToPed()
             type   = "client",
             action = pickupMail,
             icon   = 'fas fa-envelope',
-            label  = t.grab_package,
+            label  = t('grab_package'),
         }},
         distance = 3.0,
         rotation = 45,
@@ -817,7 +815,7 @@ function carryBox()
     CreateThread(function()
         while (postalJobState.isCarryingBox) do
             if IsPedInAnyVehicle(PlayerPedId(), false) then
-                NotifyPlayer(t.you_cannot_drive_with_box, 'error', 3000)
+                NotifyPlayer(t('you_cannot_drive_with_box'), 'error', 3000)
                 SetVehicleEngineOn(postalJobState.goPostalVan, false, false, true)
             end
             Wait(3000)
@@ -954,7 +952,7 @@ end
 AddEventHandler('onResourceStop', function(resource)
     if resource == GetCurrentResourceName() then
         if (postalJobState.isDoingJob) then
-            NotifyPlayer(t.force_clock_out_script_restart, 'info', 10000)
+            NotifyPlayer(t('force_clock_out_script_restart'), 'info', 10000)
             takeOffJobOutfit()
             if (postalJobState.isCarryingBox) then
                 removeBox()

@@ -22,6 +22,9 @@ RegisterServerEvent('dream-postal:server:compensateDelivery', function(positionS
                           getDistance(positionSet.middleLocation, positionSet.endLocation)
 
     local compensation = math.floor(totalDistance * PAY_MULTIPLIER)
+    
+    local compensationMessage = t('you_have_been_paid', { ['compensation'] = compensation })
+    TriggerClientEvent('dream-postal:client:notifyPlayer', source, compensationMessage, 'success')
 
     if (Config.FRAMEWORK == 'qb') then
         local Player = FRAMEWORK.Functions.GetPlayer(source)

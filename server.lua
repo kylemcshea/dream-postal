@@ -105,7 +105,7 @@ function getPlayerIdentification(src)
         fullName = Player.PlayerData.charinfo.firstname .. " " .. Player.PlayerData.charinfo.lastname
         identifier = Player.PlayerData.citizenid
     elseif (Config.FRAMEWORK == 'esx') then
-        local xPlayer = ESX.GetPlayerFromId(src)
+        local xPlayer = FRAMEWORK.GetPlayerFromId(src)
         fullName = xPlayer.getName()
         identifier = xPlayer.identifier
     else

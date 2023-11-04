@@ -18,6 +18,9 @@ end
 ---@param type? 'info' | 'warning' | 'success' | 'error', defaults to info
 ---@param duration? integer milliseconds notification will remain on screen. Defaults to 5000
 function NotifyPlayer(message, type, duration)
+    type = type or 'info'
+    duration = duration or 5000
+
     if (Config.NOTIFY == 'qb') then
         FRAMEWORK.Functions.Notify(message, type, duration)
     elseif (Config.NOTIFY == 'esx') then
@@ -35,6 +38,10 @@ function NotifyPlayer(message, type, duration)
         print('^6[^3dream-postal^6]^0 Unsupported Notify detected!')
     end
 end
+
+RegisterNetEvent('dream-postal:client:notifyPlayer', function(message, type, duration)
+    NotifyPlayer(message, type, duration)
+end)
 
 ---@param vehicle number
 function GivePlayerVehicleKeys(vehicle)

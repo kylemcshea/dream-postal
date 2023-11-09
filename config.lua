@@ -35,6 +35,9 @@ Config.POSTAL_VEHICLE_SPAWN_COORDS = vec4(130.4967, 88.7683, 82.1197, 248.5475)
 -- Pay multiplier for the job. Increase this for players to be compensated higher for their work
 Config.PAY_MULTIPLIER = 1.5
 
+-- Whether or not to show the white arrow marker above the drop off ped & blue postal boxes.
+Config.SHOW_WHITE_ARROW_MARKER = true
+
 -- List of coordinates that hold the pick-up locations for the packages.
 -- TO FIND MORE LOCATIONS:
 -- 1. Execute /pbox to find a singular location.

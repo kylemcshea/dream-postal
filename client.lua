@@ -13,6 +13,7 @@ local GO_POSTAL_HQ_BLIP = Config.GO_POSTAL_HQ_BLIP
 local MALE_OUTFIT = Config.MALE_OUTFIT
 local FEMALE_OUTFIT = Config.FEMALE_OUTFIT
 local DROP_OFF_PED_HASH = Config.DROP_OFF_PED_HASH
+local SHOW_WHITE_ARROW_MARKER = Config.SHOW_WHITE_ARROW_MARKER
 
 local isPedSpawned = false
 local postalBossPed = nil
@@ -138,19 +139,21 @@ function startPostalJob()
 
     postalJobState.postalBoxZone = TARGET.AddBoxZone('dream-postal-grab-delivery', deliveryCoords, vec3(1.0, 1.0, 3.0), parameters)
 
-    CreateThread(function()
-        while postalJobState.postalBoxZone do
-            local playerCoords = GetEntityCoords(playerPed)
-            local distanceToMarker = #(playerCoords - deliveryCoords)
+    if (SHOW_WHITE_ARROW_MARKER) then
+        CreateThread(function()
+            while postalJobState.postalBoxZone do
+                local playerCoords = GetEntityCoords(playerPed)
+                local distanceToMarker = #(playerCoords - deliveryCoords)
 
-            if (distanceToMarker <= 50.0) then
-                DrawMarker(22, deliveryCoords.x, deliveryCoords.y, (deliveryCoords.z + 1.75), 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 1.0, 255, 255, 220, 200, 0, 0, 0, 1)
-                Wait(1)
-            else
-                Wait(3000)
+                if (distanceToMarker <= 50.0) then
+                    DrawMarker(22, deliveryCoords.x, deliveryCoords.y, (deliveryCoords.z + 1.75), 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 1.0, 255, 255, 220, 200, 0, 0, 0, 1)
+                    Wait(1)
+                else
+                    Wait(3000)
+                end
             end
-        end
-    end)
+        end)
+    end
 end
 
 function pickupMail()
@@ -581,20 +584,22 @@ function spawnDeliverToPed(hash, coords, heading)
 
     postalJobState.deliverToPed = deliverToPed
 
-    CreateThread(function()
-        local playerPed = PlayerPedId()
-        while postalJobState.isDeliveringPackage do
-            local playerCoords = GetEntityCoords(playerPed)
-            local distanceToMarker = #(playerCoords - coords)
+    if (SHOW_WHITE_ARROW_MARKER) then
+        CreateThread(function()
+            local playerPed = PlayerPedId()
+            while postalJobState.isDeliveringPackage do
+                local playerCoords = GetEntityCoords(playerPed)
+                local distanceToMarker = #(playerCoords - coords)
 
-            if (distanceToMarker <= 50.0) then
-                DrawMarker(22, coords.x, coords.y, (coords.z + 1.50), 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 1.0, 255, 255, 220, 200, 0, 0, 0, 1)
-                Wait(1)
-            else
-                Wait(3000)
+                if (distanceToMarker <= 50.0) then
+                    DrawMarker(22, coords.x, coords.y, (coords.z + 1.50), 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 1.0, 255, 255, 220, 200, 0, 0, 0, 1)
+                    Wait(1)
+                else
+                    Wait(3000)
+                end
             end
-        end
-    end)
+        end)
+    end
 
     if (Config.TARGET == 'ox') then
         exports.ox_target:addLocalEntity(deliverToPed, {
@@ -737,19 +742,21 @@ function deliverPackageToPed()
 
     postalJobState.postalBoxZone = TARGET.AddBoxZone('dream-postal-grab-delivery', deliveryCoords, vec3(1.0, 1.0, 3.0), parameters)
 
-    CreateThread(function()
-        while postalJobState.postalBoxZone do
-            local playerCoords = GetEntityCoords(playerPed)
-            local distanceToMarker = #(playerCoords - deliveryCoords)
+    if (SHOW_WHITE_ARROW_MARKER) then
+        CreateThread(function()
+            while postalJobState.postalBoxZone do
+                local playerCoords = GetEntityCoords(playerPed)
+                local distanceToMarker = #(playerCoords - deliveryCoords)
 
-            if (distanceToMarker <= 50.0) then
-                DrawMarker(22, deliveryCoords.x, deliveryCoords.y, (deliveryCoords.z + 1.75), 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 1.0, 255, 255, 220, 200, 0, 0, 0, 1)
-                Wait(1)
-            else
-                Wait(3000)
+                if (distanceToMarker <= 50.0) then
+                    DrawMarker(22, deliveryCoords.x, deliveryCoords.y, (deliveryCoords.z + 1.75), 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 1.0, 255, 255, 220, 200, 0, 0, 0, 1)
+                    Wait(1)
+                else
+                    Wait(3000)
+                end
             end
-        end
-    end)
+        end)
+    end
 end
 
 CreateThread(function()

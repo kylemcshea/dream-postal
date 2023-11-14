@@ -15,10 +15,9 @@ else
 end
 
 ---@param message string text of the notification
----@param type? 'info' | 'warning' | 'success' | 'error', defaults to info
+---@param type? string
 ---@param duration? integer milliseconds notification will remain on screen. Defaults to 5000
 function NotifyPlayer(message, type, duration)
-    type = type or 'info'
     duration = duration or 5000
 
     if (Config.NOTIFY == 'qb') then

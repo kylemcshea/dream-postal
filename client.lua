@@ -95,7 +95,7 @@ function startPostalJob()
     })
 
     local playerPed = PlayerPedId()
-    NotifyPlayer(t('head_over_to_waypoint'), 'info')
+    NotifyPlayer(t('head_over_to_waypoint'))
     postalJobState.isDoingJob = true
     postalJobState.positionSet.startLocation = GetEntityCoords(playerPed)
 
@@ -171,7 +171,7 @@ function pickupMail()
         message = t('picked_up_mail'),
     })
 
-    NotifyPlayer(t('place_package_in_back_of_van'), 'info')
+    NotifyPlayer(t('place_package_in_back_of_van'))
 
     TARGET.RemoveZone(postalJobState.postalBoxZone)
     RemoveBlip(postalJobState.pickupBlip)
@@ -467,7 +467,7 @@ function spawnGoPostalVehicle()
 end
 
 function endPostalJob()
-    NotifyPlayer(t('you_are_done_with_shift'), 'info')
+    NotifyPlayer(t('you_are_done_with_shift'))
 
     log({
         type = 'success',
@@ -959,7 +959,7 @@ end
 AddEventHandler('onResourceStop', function(resource)
     if resource == GetCurrentResourceName() then
         if (postalJobState.isDoingJob) then
-            NotifyPlayer(t('force_clock_out_script_restart'), 'info', 10000)
+            NotifyPlayer(t('force_clock_out_script_restart'))
             takeOffJobOutfit()
             if (postalJobState.isCarryingBox) then
                 removeBox()

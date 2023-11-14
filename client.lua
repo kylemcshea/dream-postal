@@ -278,7 +278,7 @@ function insertPackageIntoVehicle()
             if distanceFromPed < 200 and not postalJobState.deliverToPed then
                 spawnDeliverToPed(DROP_OFF_PED_HASH, deliveryCoords, deliveryHeading)
             end
-            if postalJobState.deliverToPed and distanceFromPed >= 201 then
+            if postalJobState.deliverToPed and distanceFromPed >= 200 then
                 DeletePed(postalJobState.deliverToPed)
                 postalJobState.deliverToPed = nil
             end
@@ -782,7 +782,7 @@ CreateThread(function()
             spawnPostalBossPed()
         end
 
-        if postalBossPed and distanceFromPed >= 201 and isPedSpawned then
+        if postalBossPed and distanceFromPed >= 200 and isPedSpawned then
             isPedSpawned = false
             DeletePed(postalBossPed)
         end

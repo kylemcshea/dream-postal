@@ -4,10 +4,10 @@ DREAM_TRANSLATE = {} -- DO NOT MODIFY THIS LINE OF CODE
 --- Language configuration setting.
 -- This sets the active language for translations in the system.
 ---@usage Config.LANGUAGE = 'en'  -- This sets the language to English.
----@field Config.LANGUAGE string (only 'en', 'es', or 'fr' are valid). If you want 
--- to add more languages, follow the format in the code or open a ticket 
+---@field Config.LANGUAGE string (only 'en', 'es', 'fr', or 'et' are valid). 
+-- If you want to add more languages, follow the format in the code or open a ticket 
 -- in the Discord for assistance.
-Config.LANGUAGE = 'en' -- 'en' | 'es | 'fr'
+Config.LANGUAGE = 'en' -- 'en' | 'es | 'fr' | 'et'
 
 Config.NOTIFY    = 'qb' -- 'qb' | 'esx' | 'esx-new' | 'okok' | 'mythic' | 'chat'
 Config.TARGET    = 'ox' -- 'ox' | 'qb-target'

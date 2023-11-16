@@ -10,6 +10,14 @@ Welcome to the most immersive GoPostal Job experience for your FiveM server. Cra
 ### Developer Tools:
 Stuck with a package due to the job? Or maybe you're on a mission to record or find the exact coordinates of postal boxes? We've got handy developer tools for that!
 
+#### To Whitelist the job & add to `qb-cityhall`:
+1. In config.lua make `Config.IS_WHITELISTED_TO_JOB` true.
+2. In config.lua change `Config.WHITELISTED_JOB_TITLE` to job string of desired. We have it as `postal` by default.
+3. Add the following snippet to `qb-cityhall/config.lua`
+```lua
+['postal'] = { ['label'] = 'GoPostal', ['isManaged'] = false }
+```
+
 #### Removing a Box:
 If a player is stuck carrying a box due to the job, simply type: `/removebox`
 

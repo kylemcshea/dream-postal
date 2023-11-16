@@ -14,6 +14,8 @@ local MALE_OUTFIT = Config.MALE_OUTFIT
 local FEMALE_OUTFIT = Config.FEMALE_OUTFIT
 local DROP_OFF_PED_HASH = Config.DROP_OFF_PED_HASH
 local SHOW_WHITE_ARROW_MARKER = Config.SHOW_WHITE_ARROW_MARKER
+local IS_WHITELISTED_TO_JOB = Config.IS_WHITELISTED_TO_JOB
+local WHITELISTED_JOB_TITLE = Config.WHITELISTED_JOB_TITLE
 
 local isPedSpawned = false
 local postalBossPed = nil
@@ -509,6 +511,7 @@ function spawnPostalBossPed()
                 end,
                 distance = 3.0,
                 onSelect = startPostalJob,
+                groups = IS_WHITELISTED_TO_JOB and WHITELISTED_JOB_TITLE or nil,
             },
             {
                 name = 'end-postal-job',
@@ -519,6 +522,7 @@ function spawnPostalBossPed()
                 end,
                 distance = 3.0,
                 onSelect = endPostalJob,
+                groups = IS_WHITELISTED_TO_JOB and WHITELISTED_JOB_TITLE or nil,
             }
         })
     elseif (Config.TARGET == 'qb-target') then
@@ -534,6 +538,7 @@ function spawnPostalBossPed()
                     action = function()
                         startPostalJob()
                     end,
+                    job = IS_WHITELISTED_TO_JOB and WHITELISTED_JOB_TITLE or nil,
                 },
                 {
                     type = "client",
@@ -545,6 +550,7 @@ function spawnPostalBossPed()
                     action = function()
                         endPostalJob()
                     end,
+                    job = IS_WHITELISTED_TO_JOB and WHITELISTED_JOB_TITLE or nil,
                 }
             },
             distance = 3.0,

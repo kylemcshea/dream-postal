@@ -17,6 +17,11 @@ Config.GET_CORE  = exports['qb-core']:GetCoreObject()
 
 Config.DEBUG = false -- debug target boxes
 
+-- Whether or not to only allow a certain job to do postal deliveries
+Config.IS_WHITELISTED_TO_JOB = false
+-- IF we are whitelisting to a job, whats the job code name?
+Config.WHITELISTED_JOB_TITLE = 'postal'
+
 -- Start job ped location
 Config.POSTAL_BOSS_CORDS   = vec3(132.9577, 96.1347, 82.5076)
 Config.POSTAL_BOSS_HEADING = 149.7562

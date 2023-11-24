@@ -1,5 +1,5 @@
 ---@diagnostic disable: lowercase-global
-local POSTAL_BOSS_COORDS = Config.POSTAL_BOSS_CORDS
+local POSTAL_BOSS_COORDS = Config.POSTAL_BOSS_COORDS
 local POSTAL_BOSS_HEADING = Config.POSTAL_BOSS_HEADING
 local POSTAL_BOSS_HASH = Config.POSTAL_BOSS_HASH
 local POSTAL_BOSS_ANIMATION = Config.POSTAL_BOSS_ANIMATION
@@ -91,16 +91,11 @@ function startPostalJob()
         return
     end
 
-    log({
-        type = 'success',
-        message = t('started_postal_job'),
-    })
-
     local playerPed = PlayerPedId()
     NotifyPlayer(t('head_over_to_waypoint'))
     postalJobState.isDoingJob = true
     postalJobState.positionSet.startLocation = GetEntityCoords(playerPed)
-
+    TriggerServerEvent("dream-postal:server:start:job")
     spawnGoPostalVehicle()
     putOnJobOutfit()
 
@@ -161,17 +156,8 @@ end
 function pickupMail()
     if (not postalJobState.isDoingJob) then
         NotifyPlayer(t('you_are_not_on_the_job'), 'error')
-        log({
-            type = 'error',
-            message = t('player_tried_picking_up_mail_exploit'),
-        })
         return
     end
-
-    log({
-        type = 'success',
-        message = t('picked_up_mail'),
-    })
 
     NotifyPlayer(t('place_package_in_back_of_van'))
 
@@ -470,11 +456,7 @@ end
 
 function endPostalJob()
     NotifyPlayer(t('you_are_done_with_shift'))
-
-    log({
-        type = 'success',
-        message = t('ended_shift'),
-    })
+    TriggerServerEvent("dream-postal:server:end:job")
 
     if (postalJobState.goPostalVan) then
         DeleteEntity(postalJobState.goPostalVan)
@@ -646,11 +628,6 @@ end
 function deliverPackageToPed()
     -- check if player is clocked in
     if (not postalJobState.isDoingJob) then
-        log({
-            type = 'error',
-            message = t('tried_to_deliver_while_clocked_out'),
-        })
-
         return
     end
 
@@ -658,11 +635,6 @@ function deliverPackageToPed()
     local dropOffCoords = postalJobState.dropOffCoords
     local vehicleCoords = GetEntityCoords(postalJobState.goPostalVan)
     if #(dropOffCoords - vehicleCoords) > 30.00 then
-        log({
-            type = 'error',
-            message = t('tried_to_deliver_no_van'),
-        })
-
         return
     end
 
@@ -670,11 +642,6 @@ function deliverPackageToPed()
         NotifyPlayer(t('where_is_the_package'), 'error', 7500)
         return
     end
-
-    log({
-        type = 'success',
-        message = t('delivered_a_package'),
-    })
 
     local playerPed = PlayerPedId()
     NotifyPlayer(t('you_delivered_the_package'), 'success')

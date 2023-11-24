@@ -24,7 +24,7 @@ Config.IS_WHITELISTED_TO_JOB = false
 Config.WHITELISTED_JOB_TITLE = 'postal'
 
 -- Start job ped location
-Config.POSTAL_BOSS_CORDS   = vec3(132.9577, 96.1347, 82.5076)
+Config.POSTAL_BOSS_COORDS   = vec3(132.9577, 96.1347, 82.5076)
 Config.POSTAL_BOSS_HEADING = 149.7562
 
 -- Start job ped hash and animation

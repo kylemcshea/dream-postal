@@ -3,6 +3,8 @@ FRAMEWORK = nil
 if (Config.FRAMEWORK == 'qb') then
     FRAMEWORK = Config.GET_CORE
 elseif (Config.FRAMEWORK == 'esx') then
+    FRAMEWORK = exports["es_extended"]:getSharedObject()
+elseif (Config.FRAMEWORK == 'esx-old') then
     TriggerEvent('esx:getSharedObject', function(obj) FRAMEWORK = obj end)
 else
     -- put in custom logic to grab framework and delete print code underneath
@@ -29,7 +31,7 @@ RegisterServerEvent('dream-postal:server:compensateDelivery', function(positionS
     if (Config.FRAMEWORK == 'qb') then
         local Player = FRAMEWORK.Functions.GetPlayer(source)
         Player.Functions.AddMoney('bank', compensation)
-    elseif (Config.FRAMEWORK == 'esx') then
+    elseif (Config.FRAMEWORK == 'esx' or Config.FRAMEWORK == 'esx-old') then
         local xPlayer = FRAMEWORK.GetPlayerFromId(source)
         xPlayer.addAccountMoney('bank', compensation)
     else
@@ -107,7 +109,7 @@ function getPlayerIdentification(src)
         local Player = FRAMEWORK.Functions.GetPlayer(src)
         fullName = Player.PlayerData.charinfo.firstname .. " " .. Player.PlayerData.charinfo.lastname
         identifier = Player.PlayerData.citizenid
-    elseif (Config.FRAMEWORK == 'esx') then
+    elseif (Config.FRAMEWORK == 'esx' or Config.FRAMEWORK == 'esx-old') then
         local xPlayer = FRAMEWORK.GetPlayerFromId(src)
         fullName = xPlayer.getName()
         identifier = xPlayer.identifier

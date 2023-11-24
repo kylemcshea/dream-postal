@@ -11,7 +11,8 @@ Config.LANGUAGE = 'en' -- 'en' | 'es | 'fr' | 'et'
 
 Config.NOTIFY    = 'qb' -- 'qb' | 'esx' | 'esx-new' | 'okok' | 'mythic' | 'chat'
 Config.TARGET    = 'ox' -- 'ox' | 'qb-target'
-Config.FRAMEWORK = 'qb' -- 'qb' | 'esx'
+Config.FRAMEWORK = 'qb' -- 'qb' | 'esx' | 'esx-old'
+-- COMMENT OUT GET_CORE if using 'esx' or 'esx-old'
 -- optional to fill in, if you use qb-core this is your getCoreObject function you use.
 Config.GET_CORE  = exports['qb-core']:GetCoreObject()
 

@@ -3,6 +3,8 @@ FRAMEWORK = nil
 if (Config.FRAMEWORK == 'qb') then
     FRAMEWORK = Config.GET_CORE
 elseif (Config.FRAMEWORK == 'esx') then
+    FRAMEWORK = exports["es_extended"]:getSharedObject()
+elseif (Config.FRAMEWORK == 'esx-old') then
     Citizen.CreateThread(function()
         while FRAMEWORK == nil do
             TriggerEvent('esx:getSharedObject', function(obj) FRAMEWORK = obj end)

@@ -941,17 +941,3 @@ AddEventHandler('onResourceStop', function(resource)
         end
     end
 end)
-
----@param data { type: 'success' | 'error', message: string }
-function log(data)
-    local type = data.type
-    local message = data.message
-
-    local logData = {
-        type = type,
-        message = message,
-        postalJobState = (type == 'error') and postalJobState or nil,
-    }
-
-    TriggerServerEvent('dream-postal:server:log', logData)
-end

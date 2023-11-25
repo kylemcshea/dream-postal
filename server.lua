@@ -99,7 +99,7 @@ local DISCORD_NAME = "DreamLife RP BOT"                                         
 local DISCORD_IMAGE = "https://img.freepik.com/premium-vector/cute-robot-waving-hand-cartoon-illustration_138676-2744.jpg?w=2000"
 local LOG_FOOTER = '[DreamLife RP LOGS]'
 
----@param data { type: string, message: string, postalJobState?: table, source: int }
+---@param data { type: string, message: string, source: int }
 AddEventHandler('dream-postal:server:log', function(data)
     local src = data.source
     local xPlayer = getPlayerIdentification(src)
@@ -137,10 +137,10 @@ end)
 
 -- utils
 
-function IsNearAnyDeliverPoint(source)
+function isNearAnyDeliverPoint(source)
     local coords = GetEntityCoords(GetPlayerPed(source))
 
-    for k,v in pairs(Config.POSTAL_DROP_OFF_PACKAGE) do
+    for _,v in pairs(Config.POSTAL_DROP_OFF_PACKAGE) do
         local deliverCoords = vector3(v.x, v.y, v.z)
         local dist = #(coords - deliverCoords)
 

@@ -1,4 +1,5 @@
-FRAMEWORK = nil
+FRAMEWORK      = nil
+currentWorkers = {}
 
 if (Config.FRAMEWORK == 'qb') then
     FRAMEWORK = Config.GET_CORE
@@ -13,8 +14,58 @@ end
 
 local PAY_MULTIPLIER = Config.PAY_MULTIPLIER
 
+RegisterServerEvent("dream-postal:server:start:job", function()
+    local source = source
+    local ped = GetPlayerPed(source)
+    local coords = GetEntityCoords(ped)
+    local dist = #(coords - Config.POSTAL_BOSS_COORDS)
+
+    if dist > 25 then
+        print(("^8[CheatFlag]^0 dream-postal:server:start:job: %s(%s) Tried to start the job while %.2f meters away from marker"):format(GetPlayerName(source), GetPlayerIdentifier(source, 0), dist))
+        return
+    end
+
+    currentWorkers[source] = {
+        lastPoint = os.time(),
+        takenPoints = 0
+    }
+
+    TriggerEvent("dream-postal:server:log", { source = source, type = "success", message = t('started_postal_job')})
+end)
+
+RegisterServerEvent("dream-postal:server:end:job", function()
+    if not currentWorkers[source] then return end
+
+    currentWorkers[source] = nil
+    TriggerEvent("dream-postal:server:log", { source = source, type = "success", message = t('ended_shift')})
+end)
+
 ---@param positionSet {startLocation: vector3, middleLocation: vector3, endLocation: vector3}
 RegisterServerEvent('dream-postal:server:compensateDelivery', function(positionSet)
+    local source = source
+    local data = currentWorkers[source]
+
+    if not data then
+        print(("^8[CheatFlag]^0 dream-postal:server:compensateDelivery: %s(%s) Tried to deliver packages without starting the job"):format(GetPlayerName(source), GetPlayerIdentifier(source, 0)))
+        return
+    end
+
+    local time = os.time() - data.lastPoint
+    if os.time() - data.lastPoint < 30 then
+        print(("^8[CheatFlag]^0 dream-postal:server:compensateDelivery: %s(%s) Tried to deliver packages while the last package was %s seconds ago"):format(GetPlayerName(source), GetPlayerIdentifier(source, 0), time))
+        return
+    end
+
+    if #Config.POSTAL_DROP_OFF_PACKAGE - currentWorkers[source].takenPoints < 0 then
+        print(("^8[CheatFlag]^0 dream-postal:server:compensateDelivery: %s(%s) Tried to deliver packages while all point already taken?"):format(GetPlayerName(source), GetPlayerIdentifier(source, 0)))
+        return
+    end
+
+    if not IsNearAnyDeliverPoint(source) then
+        print(("^8[CheatFlag]^0 dream-postal:server:compensateDelivery: %s(%s) Tried to deliver packages while not near any deliverpoint"):format(GetPlayerName(source), GetPlayerIdentifier(source, 0)))
+        return
+    end
+
     if not isValidPositionSet(positionSet) then
         print('Error: Missing position data.')
         return
@@ -38,6 +89,8 @@ RegisterServerEvent('dream-postal:server:compensateDelivery', function(positionS
         -- put in custom logic to grab framework and delete print code underneath
         print('^6[^3dream-postal^6]^0 Unsupported Framework detected!')
     end
+
+    TriggerEvent("dream-postal:server:log", { source = source, type = "success", message = t('delivered_a_package')})
 end)
 
 local DISCORD_WEBHOOK = ''                         -- Your discord webhook here
@@ -46,9 +99,9 @@ local DISCORD_NAME = "DreamLife RP BOT"                                         
 local DISCORD_IMAGE = "https://img.freepik.com/premium-vector/cute-robot-waving-hand-cartoon-illustration_138676-2744.jpg?w=2000"
 local LOG_FOOTER = '[DreamLife RP LOGS]'
 
----@param data { type: string, message: string, postalJobState?: table }
-RegisterServerEvent('dream-postal:server:log', function(data)
-    local src = source
+---@param data { type: string, message: string, source: int }
+AddEventHandler('dream-postal:server:log', function(data)
+    local src = data.source
     local xPlayer = getPlayerIdentification(src)
     local fullName = xPlayer.fullName
     local identifier = xPlayer.identifier
@@ -56,23 +109,7 @@ RegisterServerEvent('dream-postal:server:log', function(data)
     local description = "Name: " .. fullName ..
     "\nIdentifier: " .. identifier ..
     "\nType: " .. data.type ..
-    "\nMessage: " .. data.message .. "\n"
-
-    -- IF data.postalJobState sent
-    -- Iterate through the postalJobState fields and add them to the description
-    if data.postalJobState then
-        description = description .. "\nPostal Job State:\n"
-        for key, value in pairs(data.postalJobState) do
-            if type(value) == "table" then
-                description = description .. key .. ":\n"
-                for subKey, subValue in pairs(value) do
-                    description = description .. "  " .. subKey .. ": " .. tostring(subValue) .. "\n"
-                end
-            else
-                description = description .. key .. ": " .. tostring(value) .. "\n"
-            end
-        end
-    end
+    "\nMessage: " .. data.message
 
     local connect = {
         {
@@ -89,8 +126,31 @@ RegisterServerEvent('dream-postal:server:log', function(data)
         { ['Content-Type'] = 'application/json' })
 end)
 
+AddEventHandler("playerDropped", function()
+    if currentWorkers[source] then
+        currentWorkers[source] = nil
+    end
+
+    TriggerEvent("dream-postal:server:log", { source = source, type = "success", message = t('ended_shift')})
+end)
+
 
 -- utils
+
+function isNearAnyDeliverPoint(source)
+    local coords = GetEntityCoords(GetPlayerPed(source))
+
+    for _,v in pairs(Config.POSTAL_DROP_OFF_PACKAGE) do
+        local deliverCoords = vector3(v.x, v.y, v.z)
+        local dist = #(coords - deliverCoords)
+
+        if dist < 15 then
+            return true
+        end
+    end
+
+    return false
+end
 
 function getDistance(pointA, pointB)
     return #(pointA - pointB)

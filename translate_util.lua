@@ -15,8 +15,6 @@ function t(key, values)
     end
 
     for tKey, value in pairs(values) do
-        print(tKey)
-        print(value)
         text = text:gsub('{{ ' .. tKey .. ' }}', tostring(value))
     end
 

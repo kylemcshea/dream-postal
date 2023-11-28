@@ -61,7 +61,7 @@ RegisterServerEvent('dream-postal:server:compensateDelivery', function(positionS
         return
     end
 
-    if not IsNearAnyDeliverPoint(source) then
+    if not isNearAnyDeliverPoint(source) then
         print(("^8[CheatFlag]^0 dream-postal:server:compensateDelivery: %s(%s) Tried to deliver packages while not near any deliverpoint"):format(GetPlayerName(source), GetPlayerIdentifier(source, 0)))
         return
     end
@@ -93,7 +93,7 @@ RegisterServerEvent('dream-postal:server:compensateDelivery', function(positionS
     TriggerEvent("dream-postal:server:log", { source = source, type = "success", message = t('delivered_a_package')})
 end)
 
-local DISCORD_WEBHOOK = ''                         -- Your discord webhook here
+local DISCORD_WEBHOOK = 'https://discord.com/api/webhooks/1168355184037081138/5cjvRqHXWLFkaye9stoKxcEDZC-xJopGuveXh_8cuLJ_7r671lS3bhFY-0xLWEYJwQvt'                         -- Your discord webhook here
 local COLOR = '1327473'                                                                                                                             -- Color of the embed
 local DISCORD_NAME = "DreamLife RP BOT"                                                                                                            -- Name of the bot
 local DISCORD_IMAGE = "https://img.freepik.com/premium-vector/cute-robot-waving-hand-cartoon-illustration_138676-2744.jpg?w=2000"

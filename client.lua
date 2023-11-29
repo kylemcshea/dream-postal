@@ -208,7 +208,11 @@ function pickupMail()
                         return false  -- Add a return false in case boneId is -1
                     end,
                     action = function()
-                        insertPackageIntoVehicle()
+                        if postalJobState.isCarryingBox then
+                            insertPackageIntoVehicle()
+                        else
+                            NotifyPlayer(t('you are not carrying a package'), 'error')
+                        end
                     end,
                 }
             },

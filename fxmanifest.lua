@@ -9,6 +9,8 @@ shared_scripts {
 	'config.lua',
     'locales/*.lua',
     'translate_util.lua',
+    -- UNCOMMENT '@ox_lib/init.lua' IF USING OX_LIB
+    -- '@ox_lib/init.lua',
 }
 
 client_scripts {

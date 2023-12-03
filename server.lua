@@ -56,7 +56,7 @@ RegisterServerEvent('dream-postal:server:compensateDelivery', function(positionS
         return
     end
 
-    if #Config.POSTAL_DROP_OFF_PACKAGE - currentWorkers[source].takenPoints < 0 then
+    if #Config.POSTAL_DROP_OFF_PACKAGE - data.takenPoints < 0 then
         print(("^8[CheatFlag]^0 dream-postal:server:compensateDelivery: %s(%s) Tried to deliver packages while all point already taken?"):format(GetPlayerName(source), GetPlayerIdentifier(source, 0)))
         return
     end
@@ -89,7 +89,8 @@ RegisterServerEvent('dream-postal:server:compensateDelivery', function(positionS
         -- put in custom logic to grab framework and delete print code underneath
         print('^6[^3dream-postal^6]^0 Unsupported Framework detected!')
     end
-
+    data.lastPoint = os.time()
+    data.takenPoints += 1
     TriggerEvent("dream-postal:server:log", { source = source, type = "success", message = t('delivered_a_package')})
 end)
 

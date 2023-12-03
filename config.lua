@@ -9,7 +9,7 @@ DREAM_TRANSLATE = {} -- DO NOT MODIFY THIS LINE OF CODE
 -- in the Discord for assistance.
 Config.LANGUAGE = 'en' -- 'en' | 'es | 'fr' | 'et'
 
-Config.NOTIFY    = 'qb' -- 'qb' | 'esx' | 'esx-new' | 'okok' | 'mythic' | 'chat'
+Config.NOTIFY    = 'qb' -- 'qb' | 'ox' | 'esx' | 'esx-new' | 'okok' | 'mythic' | 'chat'
 Config.TARGET    = 'ox' -- 'ox' | 'qb-target'
 Config.FRAMEWORK = 'qb' -- 'qb' | 'esx' | 'esx-old'
 -- COMMENT OUT GET_CORE if using 'esx' or 'esx-old'

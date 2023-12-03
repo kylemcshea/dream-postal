@@ -24,12 +24,19 @@ function NotifyPlayer(message, type, duration)
 
     if (Config.NOTIFY == 'qb') then
         FRAMEWORK.Functions.Notify(message, type, duration)
+    elseif (Config.NOTIFY == 'ox') then
+        lib.notify({
+            title = 'GoPostal',
+            description = message,
+            type = type,
+            duration = duration,
+        })
     elseif (Config.NOTIFY == 'esx') then
         FRAMEWORK.ShowHelpNotification(message)
     elseif (Config.NOTIFY == 'esx-new') then
         FRAMEWORK.ShowNotification(message, type, duration)
     elseif (Config.NOTIFY == 'okok') then
-        exports['okokNotify']:Alert('Go Postal', message, duration, type)
+        exports['okokNotify']:Alert('GoPostal', message, duration, type)
     elseif (Config.NOTIFY == 'mythic') then
         exports['mythic_notify']:DoHudText(type, message)
     elseif (Config.NOTIFY == 'chat') then

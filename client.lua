@@ -470,7 +470,7 @@ function endPostalJob()
 end
 
 function spawnPostalBossPed()
-    local postalPedHashKey = GetHashKey(POSTAL_BOSS_HASH)
+    local postalPedHashKey = joaat(POSTAL_BOSS_HASH)
     if not HasModelLoaded(postalPedHashKey) then
         RequestModel(postalPedHashKey)
         Wait(10)
@@ -551,7 +551,7 @@ end
 ---@param coords vector3
 ---@param heading number
 function spawnDeliverToPed(hash, coords, heading)
-    local hashKey = GetHashKey(hash)
+    local hashKey = joaat(hash)
     if not HasModelLoaded(hashKey) then
         RequestModel(hashKey)
         Wait(10)
@@ -783,11 +783,12 @@ function removeBox()
     ClearPedTasks(playerPed)
 end
 
+local boxHash = `hei_prop_heist_box`
 function carryBox()
     postalJobState.isCarryingBox = true
     local ped = PlayerPedId()
     local x,y,z = table.unpack(GetEntityCoords(ped))
-    local prop = CreateObject(GetHashKey('hei_prop_heist_box'), x, y, z + 0.2,  true,  true, true)
+    local prop = CreateObject(boxHash, x, y, z + 0.2,  true,  true, true)
 	AttachEntityToEntity(prop, ped, GetPedBoneIndex(ped, 60309), 0.025, 0.08, 0.255, -145.0, 290.0, 0.0, true, true, false, true, 1, true)
     LoadDict('anim@heists@box_carry@')
 
@@ -818,9 +819,10 @@ local mask, tmask, hand, thand, pants, tpants, backpack, tbackpack, shoes, tshoe
 local accessories, taccessories, undershirt, tundershirt, jacket, tjacket
 local bodyarmor, tbodyarmor, decal, tdecal, propGlasses, propGlassesTexture
 
+local maleHash = `mp_m_freemode_01`
 function putOnJobOutfit()
     local playerPed = PlayerPedId()
-    local isMale = IsPedModel(playerPed, GetHashKey('mp_m_freemode_01'))
+    local isMale = IsPedModel(playerPed, maleHash)
 
     mask = GetPedDrawableVariation(playerPed, 1)
     tmask = GetPedTextureVariation(playerPed, 1)

@@ -1,3 +1,21 @@
+FRAMEWORK = nil
+
+if (Config.FRAMEWORK == 'qb') then
+    FRAMEWORK = Config.GET_CORE
+elseif (Config.FRAMEWORK == 'esx') then
+    FRAMEWORK = exports["es_extended"]:getSharedObject()
+elseif (Config.FRAMEWORK == 'esx-old') then
+    Citizen.CreateThread(function()
+        while FRAMEWORK == nil do
+            TriggerEvent('esx:getSharedObject', function(obj) FRAMEWORK = obj end)
+            Citizen.Wait(0)
+        end
+    end)
+else
+    -- put in custom logic to grab framework and delete print code underneath
+    print('^6[^3dream-postal^6]^0 Unsupported Framework detected!')
+end
+
 ---@diagnostic disable: lowercase-global
 local POSTAL_BOSS_COORDS = Config.POSTAL_BOSS_COORDS
 local POSTAL_BOSS_HEADING = Config.POSTAL_BOSS_HEADING
@@ -751,18 +769,36 @@ end)
 CreateThread(function()
     while true do
         Citizen.Wait(2000)
-        local playerCoords = GetEntityCoords(PlayerPedId())
-        local distanceFromPed = #(POSTAL_BOSS_COORDS - playerCoords)
+		if (Config.FRAMEWORK == 'esx') then
+			local IsLoaded = FRAMEWORK.IsPlayerLoaded()
+			if IsLoaded then
+				local playerCoords = GetEntityCoords(PlayerPedId())
+                local distanceFromPed = #(POSTAL_BOSS_COORDS - playerCoords)
 
-        if distanceFromPed < 200 and not isPedSpawned then
-            isPedSpawned = true
-            spawnPostalBossPed()
-        end
+                if distanceFromPed < 200 and not isPedSpawned then
+                    isPedSpawned = true
+                    spawnPostalBossPed()
+                end
 
-        if postalBossPed and distanceFromPed >= 200 and isPedSpawned then
-            isPedSpawned = false
-            DeletePed(postalBossPed)
-        end
+                if postalBossPed and distanceFromPed >= 200 and isPedSpawned then
+                    isPedSpawned = false
+                    DeletePed(postalBossPed)
+                end
+			end
+		else
+			local playerCoords = GetEntityCoords(PlayerPedId())
+        	local distanceFromPed = #(POSTAL_BOSS_COORDS - playerCoords)
+
+	        if distanceFromPed < 200 and not isPedSpawned then
+	            isPedSpawned = true
+	            spawnPostalBossPed()
+	        end
+	
+	        if postalBossPed and distanceFromPed >= 200 and isPedSpawned then
+	            isPedSpawned = false
+	            DeletePed(postalBossPed)
+	        end
+		end
     end
 end)
 

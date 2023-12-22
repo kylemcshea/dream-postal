@@ -170,11 +170,11 @@ RegisterCommand('gpfit', function()
     end
 end)
 
+local postalBoxHash = `prop_postbox_01a`
+
 ---@param searchRadius number
 ---@return vector3 | nil
 function getNearestPostalBox(searchRadius)
-    local postalBoxHash = GetHashKey('prop_postbox_01a')
-
     local playerCoords = GetEntityCoords(PlayerPedId())
     local nearestPostalBox = GetClosestObjectOfType(playerCoords, searchRadius, postalBoxHash)
     if (nearestPostalBox == 0) then return nil end

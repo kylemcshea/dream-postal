@@ -7,9 +7,6 @@ Welcome to the most immersive GoPostal Job experience for your FiveM server. Cra
 - **Targeting Systems**: Enhanced gameplay with full support for `ox_target` & `qb-target`.
 - **Notification Systems**: Get notified whether you use QB, ESX, okok, or mythic.
 
-### Developer Tools:
-Stuck with a package due to the job? Or maybe you're on a mission to record or find the exact coordinates of postal boxes? We've got handy developer tools for that!
-
 #### To Whitelist the job & add to `qb-cityhall`:
 1. In config.lua make `Config.IS_WHITELISTED_TO_JOB` true.
 2. In config.lua change `Config.WHITELISTED_JOB_TITLE` to job string of desired. We have it as `postal` by default.
@@ -17,6 +14,34 @@ Stuck with a package due to the job? Or maybe you're on a mission to record or f
 ```lua
 ['postal'] = { ['label'] = 'GoPostal', ['isManaged'] = false }
 ```
+4. Add the following snippet to `qb-core/shared/jobs.lua`
+```lua
+    ['postal'] = {
+        label = 'GoPostal',
+        defaultDuty = false,
+        offDutyPay = false,
+        grades = {
+            [0] = {
+                name = 'Delivery Driver',
+                payment = 0,
+                isboss = false,
+            },
+            [1] = {
+                name = 'Manager',
+                isboss = true,
+                payment = 0
+            },
+            [2] = {
+                name = 'Boss',
+                isboss = true,
+                payment = 0
+            },
+        }
+    },
+```
+
+### Developer Tools:
+Stuck with a package due to the job? Or maybe you're on a mission to record or find the exact coordinates of postal boxes? We've got handy developer tools for that!
 
 #### Removing a Box:
 If a player is stuck carrying a box due to the job, simply type: `/removebox`
@@ -36,6 +61,14 @@ Automatically detect and record postal boxes within your vicinity.
 4. Press F8.
 5. Click "Open Log".
 6. Scroll to the bottom for the recorded coordinates.
+
+#### Detecting Clothing Codes:
+Automatically detect and record postal boxes within your vicinity.
+1. Put on desired GoPostal Outfit in clothing store.
+2. Save desired outfit onto your player.
+3. Execute `/gpfit` to see the outfit codes in F8.
+5. Click "Open Log".
+6. Scroll to the bottom for the outfit codes and plug them into `config.lua`.
 
 Want to collaborate, or get access to support and more? Reach out:
 - **[Check out the Showcase](https://www.youtube.com/watch?v=fSwJO3C85E0)**

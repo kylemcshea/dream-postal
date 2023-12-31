@@ -63,7 +63,7 @@ Automatically detect and record postal boxes within your vicinity.
 6. Scroll to the bottom for the recorded coordinates.
 
 #### Detecting Clothing Codes:
-Automatically detect and record postal boxes within your vicinity.
+Detect Clothing Outfit codes for GoPostal Outfit.
 1. Put on desired GoPostal Outfit in clothing store.
 2. Save desired outfit onto your player.
 3. Execute `/gpfit` to see the outfit codes in F8.

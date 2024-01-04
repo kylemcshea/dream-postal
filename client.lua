@@ -1,4 +1,16 @@
+if (Config.FRAMEWORK == 'qb') then
+    FRAMEWORK = Config.GET_CORE
+elseif (Config.FRAMEWORK == 'esx') then
+    FRAMEWORK = exports["es_extended"]:getSharedObject()
+elseif (Config.FRAMEWORK == 'esx-old') then
+    TriggerEvent('esx:getSharedObject', function(obj) FRAMEWORK = obj end)
+else
+    -- put in custom logic to grab framework and delete print code underneath
+    print('^6[^3dream-postal^6]^0 Unsupported Framework detected!')
+end
+
 ---@diagnostic disable: lowercase-global
+
 local POSTAL_BOSS_COORDS = Config.POSTAL_BOSS_COORDS
 local POSTAL_BOSS_HEADING = Config.POSTAL_BOSS_HEADING
 local POSTAL_BOSS_HASH = Config.POSTAL_BOSS_HASH
@@ -16,6 +28,8 @@ local DROP_OFF_PED_HASH = Config.DROP_OFF_PED_HASH
 local SHOW_WHITE_ARROW_MARKER = Config.SHOW_WHITE_ARROW_MARKER
 local IS_WHITELISTED_TO_JOB = Config.IS_WHITELISTED_TO_JOB
 local WHITELISTED_JOB_TITLE = Config.WHITELISTED_JOB_TITLE
+local USE_PROGRESS_BAR = Config.USE_PROGRESS_BAR
+local PROGRESS_BAR = Config.PROGRESS_BAR
 
 local isPedSpawned = false
 local postalBossPed = nil
@@ -159,6 +173,31 @@ function pickupMail()
         return
     end
 
+    if (USE_PROGRESS_BAR) then 
+        if (PROGRESS_BAR == 'qb') then
+            QBCore.Functions.Progressbar("grab_mail", "Grabbing Package from Mailbox", Config.PROGRESS_BAR_DURATION, false, false, {
+                disableMovement = true,
+                disableCarMovement = true,
+                disableMouse = false,
+                disableCombat = true,
+            }, {
+                animDict = "anim_heist@arcade@light_gun@male@right@",
+                animName = "enter",
+                flags = 49
+            }, {}, {}, function() -- Done
+            
+            end, function() -- Cancel
+
+            end)
+            Wait(Config.PROGRESS_BAR_DURATION)
+        elseif (PROGRESS_BAR == 'an_progBar') then
+            exports['an-progBar']:run(Config.PROGRESS_BAR_DURATION, 'Grabbing Package from Mailbox')
+            Wait(Config.PROGRESS_BAR_DURATION)
+        else 
+            print('^6[^3dream-postal^6]^0 Unsupported Progress Bar detected!')
+        end
+    end
+
     NotifyPlayer(t('place_package_in_back_of_van'))
 
     TARGET.RemoveZone(postalJobState.postalBoxZone)
@@ -225,7 +264,31 @@ function pickupMail()
 end
 
 function insertPackageIntoVehicle()
-    -- TODO: add some sort of animation
+    if (USE_PROGRESS_BAR) then 
+        if (PROGRESS_BAR == 'qb') then
+            QBCore.Functions.Progressbar("insert_into_veh", "Placing Package into Vehicle", Config.PROGRESS_BAR_DURATION, false, false, {
+                disableMovement = true,
+                disableCarMovement = true,
+                disableMouse = false,
+                disableCombat = true,
+            }, {
+                animDict = "anim_heist@arcade@light_gun@male@right@",
+                animName = "enter",
+                flags = 49
+            }, {}, {}, function() -- Done
+            
+            end, function() -- Cancel
+
+            end)
+            Wait(Config.PROGRESS_BAR_DURATION)
+        elseif (PROGRESS_BAR == 'an_progBar') then
+            exports['an-progBar']:run(Config.PROGRESS_BAR_DURATION, 'Placing Package into Vehicle')
+            Wait(Config.PROGRESS_BAR_DURATION)
+        else 
+            print('^6[^3dream-postal^6]^0 Unsupported Progress Bar detected!')
+        end
+    end
+
     removeBox()
 
     if (Config.TARGET == 'ox') then
@@ -423,6 +486,30 @@ function createPutPackageInVanZone()
 end
 
 function putPackageInVehicle()
+    if (USE_PROGRESS_BAR) then 
+        if (PROGRESS_BAR == 'qb') then
+            QBCore.Functions.Progressbar("insert_into_veh", "Placing Package into Vehicle", Config.PROGRESS_BAR_DURATION, false, false, {
+                disableMovement = true,
+                disableCarMovement = true,
+                disableMouse = false,
+                disableCombat = true,
+            }, {
+                animDict = "anim_heist@arcade@light_gun@male@right@",
+                animName = "enter",
+                flags = 49
+            }, {}, {}, function() -- Done
+            
+            end, function() -- Cancel
+
+            end)
+            Wait(Config.PROGRESS_BAR_DURATION)
+        elseif (PROGRESS_BAR == 'an_progBar') then
+            exports['an-progBar']:run(Config.PROGRESS_BAR_DURATION, 'Placing Package into Vehicle')
+            Wait(Config.PROGRESS_BAR_DURATION)
+        else 
+            print('^6[^3dream-postal^6]^0 Unsupported Progress Bar detected!')
+        end
+    end
     removeBox()
     postalJobState.isCarryingBox = false
     postalJobState.hasBoxInVan = true
@@ -642,9 +729,36 @@ function deliverPackageToPed()
         return
     end
 
+    
+
     if (not postalJobState.isCarryingBox) then
         NotifyPlayer(t('where_is_the_package'), 'error', 7500)
         return
+    end
+
+    if (USE_PROGRESS_BAR) then 
+        if (PROGRESS_BAR == 'qb') then
+            QBCore.Functions.Progressbar("give_to_ped", "Handing Package to Recipient", Config.PROGRESS_BAR_DURATION, false, false, {
+                disableMovement = true,
+                disableCarMovement = true,
+                disableMouse = false,
+                disableCombat = true,
+            }, {
+                animDict = "anim_heist@arcade@light_gun@male@right@",
+                animName = "enter",
+                flags = 49
+            }, {}, {}, function() -- Done
+            
+            end, function() -- Cancel
+
+            end)
+            Wait(Config.PROGRESS_BAR_DURATION)
+        elseif (PROGRESS_BAR == 'an_progBar') then
+            exports['an-progBar']:run(Config.PROGRESS_BAR_DURATION, 'Handing Package to Recipient')
+            Wait(Config.PROGRESS_BAR_DURATION)
+        else 
+            print('^6[^3dream-postal^6]^0 Unsupported Progress Bar detected!')
+        end
     end
 
     local playerPed = PlayerPedId()

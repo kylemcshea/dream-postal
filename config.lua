@@ -44,6 +44,11 @@ Config.PAY_MULTIPLIER = 1.5
 -- Whether or not to show the white arrow marker above the drop off ped & blue postal boxes.
 Config.SHOW_WHITE_ARROW_MARKER = true
 
+-- Whether or not to show progressbar and what kind/duration.
+Config.USE_PROGRESS_BAR = true -- use progress bar or not
+Config.PROGRESS_BAR = 'qb' -- 'qb' | 'an_progBar'
+Config.PROGRESS_BAR_DURATION = 2000 -- 2 seconds
+
 -- List of coordinates that hold the pick-up locations for the packages.
 -- TO FIND MORE LOCATIONS:
 -- 1. Execute /pbox to find a singular location.
